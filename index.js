@@ -1,3 +1,4 @@
+
 /**
  * 百度统计 - electron
  */
@@ -17,6 +18,11 @@ module.exports = baiduTongji
  */
 
 function baiduTongji (siteId, router) {
+  // siteId 必须有
+  if (!siteId && typeof siteId !== 'string') {
+    throw new TypeError('siteId must be a string')
+  }
+
   window._hmt = window._hmt || []
 
   // electron 生产模式下是直接请求文件系统，没有 http 地址
@@ -27,19 +33,27 @@ function baiduTongji (siteId, router) {
     .set('Referer', 'https://hm.baidu.com/')
     .buffer(true)
     .then(res => {
-      const hm = document.createElement("script")
-      hm.text = res.text
-      const s = document.getElementsByTagName("script")[0]
-      s.parentNode.insertBefore(hm, s)
+      /* istanbul ignore else */
+      if (res.text && res.text.indexOf('function') > -1) {
+        let hm = document.createElement("script")
+        hm.text = res.text
+
+        let head = document.getElementsByTagName('head')[0]
+        head.appendChild(hm)
+      }
     })
   
   // Vue单页应用时，监听router的每次变化
   // 把虚拟的url地址赋给百度统计的API接口
-  if (router) {
+
+  /* istanbul ignore else */
+  if (router && router.beforeEach) {
     router.beforeEach((to, from, next) => {
+      /* istanbul ignore else */
       if (to.path) {
         window._hmt.push(['_trackPageview', '/#' + to.fullPath])
       }
+
       next()
     })
   }

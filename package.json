@@ -6,7 +6,23 @@
   "repository": "git@github.com:joehecn/electron-baidu-tongji.git",
   "author": "joehecn <leanbrown@live.cn>",
   "license": "MIT",
+  "keywords": [
+    "electron",
+    "baidu",
+    "tongji",
+    "vue",
+    "vue-router"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "jest --forceExit --detectOpenHandles --coverage"
+  },
   "dependencies": {
     "superagent": "^3.8.3"
+  },
+  "devDependencies": {
+    "jest": "^23.5.0"
   }
 }
