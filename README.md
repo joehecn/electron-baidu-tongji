@@ -1,8 +1,11 @@
 # electron-baidu-tongji
 
+[![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
 [![Maintainability][codeclimate-image]][codeclimate-url]
+[![Dependency Status][david-image]][david-url]
+[![License][license-image]][license-url]
 
 Electron middleware: [百度统计](https://tongji.baidu.com/)
 
@@ -30,7 +33,7 @@ normal
 ``` javascript
 // renderer/index.js
 
-import baiduTongji from 'electron-baidu-tongji'
+const baiduTongji = require('electron-baidu-tongji')
 
 baiduTongji('e0a564dfc08b6db584e25108f6xxxxxx')
 
@@ -68,9 +71,15 @@ new Vue({
 
   [MIT](https://github.com/joehecn/electron-baidu-tongji/blob/master/LICENSE)
 
+[npm-image]: https://img.shields.io/npm/v/electron-baidu-tongji.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/electron-baidu-tongji
 [travis-image]: https://travis-ci.org/joehecn/electron-baidu-tongji.svg?branch=master
 [travis-url]: https://travis-ci.org/joehecn/electron-baidu-tongji
 [coveralls-image]: https://coveralls.io/repos/github/joehecn/electron-baidu-tongji/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/joehecn/electron-baidu-tongji?branch=master
 [codeclimate-image]: https://api.codeclimate.com/v1/badges/883cb85664346421241c/maintainability
 [codeclimate-url]: https://codeclimate.com/github/joehecn/electron-baidu-tongji/maintainability
+[david-image]: http://img.shields.io/david/joehecn/electron-baidu-tongji.svg?style=flat-square
+[david-url]: https://david-dm.org/joehecn/electron-baidu-tongji
+[license-image]: http://img.shields.io/npm/l/electron-baidu-tongji.svg?style=flat-square
+[license-url]: https://github.com/joehecn/electron-baidu-tongji/blob/master/LICENSE
