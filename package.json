@@ -1,0 +1,12 @@
+{
+  "name": "electron-baidu-tongji",
+  "version": "1.0.0",
+  "description": "baidu tongji for electron",
+  "main": "index.js",
+  "repository": "git@github.com:joehecn/electron-baidu-tongji.git",
+  "author": "joehecn <leanbrown@live.cn>",
+  "license": "MIT",
+  "dependencies": {
+    "superagent": "^3.8.3"
+  }
+}
