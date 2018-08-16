@@ -6,6 +6,7 @@
 [![Maintainability][codeclimate-image]][codeclimate-url]
 [![Dependency Status][david-image]][david-url]
 [![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
 
 Electron middleware: [百度统计](https://tongji.baidu.com/)
 
@@ -67,9 +68,15 @@ new Vue({
 
 ```
 
+See more [details information](https://joehecn.github.io/electron-baidu-tongji/)
+
 ## License
 
   [MIT](https://github.com/joehecn/electron-baidu-tongji/blob/master/LICENSE)
+
+## Thanks
+  为了更好的维护开源项目，谢谢你的支持！
+![A cup of coffee](https://raw.githubusercontent.com/joehecn/j/master/a_cup_of_coffee.JPG)
 
 [npm-image]: https://img.shields.io/npm/v/electron-baidu-tongji.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/electron-baidu-tongji
@@ -83,3 +90,5 @@ new Vue({
 [david-url]: https://david-dm.org/joehecn/electron-baidu-tongji
 [license-image]: http://img.shields.io/npm/l/electron-baidu-tongji.svg?style=flat-square
 [license-url]: https://github.com/joehecn/electron-baidu-tongji/blob/master/LICENSE
+[downloads-image]: http://img.shields.io/npm/dm/electron-baidu-tongji.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/electron-baidu-tongji
