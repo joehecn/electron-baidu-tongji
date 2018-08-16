@@ -3,6 +3,7 @@
 有同学问为什么不用 [google analytics](https://analytics.google.com/)
 
 其实是可以用的，因为 `GA` 的统计节点部署在国内，所以访客数据能够正常被发送。
+
 但由于众所周知的种种原因，在墙内无法打开 `Google Analytics` 网站，我们需要翻墙去看报表。
 
 那么百度统计呢？
