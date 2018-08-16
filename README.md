@@ -27,6 +27,8 @@ $ npm install electron-baidu-tongji -S
 ```
 
 ## API
+如果应用使用了`vue-router`，可以用`baiduTongji(siteId, router)`,
+否则用`baiduTongji(siteId)`
 
 ### baiduTongji(siteId)
 
@@ -35,6 +37,9 @@ normal
 
 ``` javascript
 // renderer/index.js
+// 如果是多页面程序，且需要统计每个页面流量的话
+// 则需要在每个页面加下面的代码
+// 代码尽量靠前
 
 const baiduTongji = require('electron-baidu-tongji')
 
