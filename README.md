@@ -13,6 +13,8 @@ Electron middleware: [百度统计](https://tongji.baidu.com/)
 ## Preconditions
   [百度统计的网站统计账号](https://tongji.baidu.com/web/homepage/index)
 
+  See more [details information](https://joehecn.github.io/electron-baidu-tongji/)
+
 ## Installation
 
 ``` bash
@@ -67,8 +69,6 @@ new Vue({
 }).$mount('#app')
 
 ```
-
-See more [details information](https://joehecn.github.io/electron-baidu-tongji/)
 
 ## License
 
