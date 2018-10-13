@@ -27,13 +27,24 @@ $ npm install electron-baidu-tongji -S
 ```
 
 ## API
-如果应用使用了`vue-router`，可以用`baiduTongji(siteId, router)`,
-否则用`baiduTongji(siteId)`
 
-### baiduTongji(siteId)
+### ebtMain(ipcMain)
+主进程
+- ipcMain: 必要参数
 
-normal
-- siteId: 必要参数 百度帐号的站点id
+``` javascript
+// main/index.js
+import { ipcMain } from 'electron'
+import { ebtMain } from 'electron-baidu-tongji'
+
+ebtMain(ipcMain)
+```
+
+### ebtRenderer(ipcRenderer, siteId, router)
+渲染进程
+- ipcRenderer: 必要参数
+- siteId:      必要参数, 百度帐号的站点id
+- router:      可选参数, 如果应用含 `vue-router`，可以使用此参数(vue-router的实例)
 
 ``` javascript
 // renderer/index.js
@@ -41,32 +52,21 @@ normal
 // 则需要在每个页面加下面的代码
 // 代码尽量靠前
 
-const baiduTongji = require('electron-baidu-tongji')
-
-baiduTongji('e0a564dfc08b6db584e25108f6xxxxxx')
-
-```
-
-### baiduTongji(siteId, router)
-
-vue-router
-- siteId: 必要参数 百度帐号的站点id
-- router: 可选参数 vue-router的实例
-
-``` javascript
-// renderer/index.js
-
 import Vue from 'vue'
 import Router from 'vue-router'
 import routerConfig from './router/router-config.js'
-import baiduTongji from 'electron-baidu-tongji'
+import { ipcRenderer } from 'electron'
+import { ebtRenderer } from 'electron-baidu-tongji'
+
+// 替换为你自己的 百度统计 siteId
+const BAIDU_SITE_ID = 'e0a564dfc08b6db584e25108f6xxxxxx'
 
 Vue.use(Router)
 
 const router = new Router(routerConfig)
 
 // 百度统计
-baiduTongji('e0a564dfc08b6db584e25108f6xxxxxx', router)
+ebtRenderer(ipcRenderer, BAIDU_SITE_ID, router)
 
 new Vue({
   router,
