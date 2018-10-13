@@ -12,7 +12,31 @@ superagent.then = function (callback) {
   callback()
 }
 
-const baiduTongji = require('../index.js')
+const { ebtMain, ebtRenderer } = require('../index.js')
+
+const res = {}
+
+const ipcMain = {
+  on (_, callback) {
+    const event = {
+      sender: {
+        send (key, value) {
+          res.mainSend = { key, value }
+        }
+      }
+    }
+    const arg = 'siteId'
+    callback(event, arg)
+  }
+}
+
+const ipcRenderer = {
+  on (_, callback) {
+    const arg = '(function () { window._hmt.push([]) })()'
+    callback(_, arg)
+  },
+  send () {}
+}
 
 const router = {
   beforeEach (callback) {
@@ -21,20 +45,61 @@ const router = {
 }
 
 describe('index.js', () => {
-  test('baiduTongji()', () => {
-    expect.assertions(1)
-
-    expect(baiduTongji).toThrow('siteId must be a string')
+  describe('ebtMain', () => {
+    test('ebtMain()', () => {
+      expect.assertions(1)
+      expect(ebtMain).toThrow('require ipcMain')
+    })
+  
+    test('ebtMain({})', () => {
+      expect.assertions(1)
+      expect(() => ebtMain({})).toThrow('require ipcMain')
+    })
+  
+    test('ebtMain(ipcMain)', done => {
+      expect.assertions(1)
+  
+      ebtMain(ipcMain)
+      setTimeout(() => {
+        expect(res.mainSend.key).toBe('electron-baidu-tongji-reply')
+        done()
+      })
+    })
   })
 
-  test('baiduTongji(siteId, router)', done => {
-    expect.assertions(1)
+  describe('ebtRenderer', () => {
+    test('ebtRenderer()', () => {
+      expect.assertions(1)
+      expect(ebtRenderer).toThrow('require ipcRenderer')
+    })
 
-    baiduTongji('e0a564dfc08b6db584e25108f652fcd1', router)
+    test('ebtRenderer({})', () => {
+      expect.assertions(1)
+      expect(() => ebtRenderer({})).toThrow('require ipcRenderer')
+    })
 
-    setTimeout(() => {
-      expect(window._hmt.length).toBe(2)
-      done()
+    test('ebtRenderer({ on })', () => {
+      expect.assertions(1)
+      expect(() => ebtRenderer({ on: {} })).toThrow('require ipcRenderer')
+    })
+
+    test('ebtRenderer({ on, send })', () => {
+      expect.assertions(1)
+      expect(() => ebtRenderer({ on: {}, send: {} })).toThrow('require siteId')
+    })
+
+    test('ebtRenderer({ on, send }, {})', () => {
+      expect.assertions(1)
+      expect(() => ebtRenderer({ on: {}, send: {} }, {})).toThrow('require siteId')
+    })
+
+    test('ebtRenderer(ipcRenderer, siteid)', done => {
+      expect.assertions(1)
+      ebtRenderer(ipcRenderer, 'siteid', router)
+      setTimeout(() => {
+        expect(window._hmt.length).toBe(2)
+        done()
+      })
     })
   })
 })
