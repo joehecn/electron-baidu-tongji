@@ -20,7 +20,7 @@
     "test": "jest --forceExit --detectOpenHandles --coverage"
   },
   "dependencies": {
-    "superagent": "^3.8.3"
+    "superagent": "^6.0.0"
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
