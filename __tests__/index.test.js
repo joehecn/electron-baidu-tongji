@@ -5,7 +5,7 @@ superagent.get = function () { return this }
 superagent.set = function () { return this }
 superagent.buffer = function () {
   return Promise.resolve({
-    text: '(function () { window._hmt.push([]) })()'
+    text: '(function () { window._hmt.push([]) })()/*(h.c.b.su=h.c.b.u||document.location.href),h.c.b.u=f.protocol+"//"+document.location.host+*/'
   })
 }
 superagent.then = function (callback) {
@@ -32,7 +32,7 @@ const ipcMain = {
 
 const ipcRenderer = {
   on (_, callback) {
-    const arg = '(function () { window._hmt.push([]) })()'
+    const arg = '(function () { window._hmt.push([]) })()/*(h.c.b.su=h.c.b.u||document.location.href),h.c.b.u=f.protocol+"//"+document.location.host+*/'
     callback(_, arg)
   },
   send () {}
@@ -59,6 +59,16 @@ describe('index.js', () => {
     test('ebtMain(ipcMain)', done => {
       expect.assertions(1)
   
+      ebtMain(ipcMain)
+      setTimeout(() => {
+        expect(res.mainSend.key).toBe('electron-baidu-tongji-reply')
+        done()
+      })
+    })
+
+    test('ebtMain(ipcMain) production', done => {
+      expect.assertions(1)
+      process.env.NODE_ENV = 'production'
       ebtMain(ipcMain)
       setTimeout(() => {
         expect(res.mainSend.key).toBe('electron-baidu-tongji-reply')

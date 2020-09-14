@@ -3,7 +3,7 @@ const request = require('superagent')
 
 /**
  * first step
- * @param {*} ipcMain 
+ * @param {*} ipcMain
  */
 const ebtMain = ipcMain => {
   /* istanbul ignore else */
@@ -21,10 +21,22 @@ const ebtMain = ipcMain => {
       .set('Referer', 'https://hm.baidu.com/')
       .buffer(true)
       .then(res => {
+        const rource = '(h.c.b.su=h.c.b.u||document.location.href),h.c.b.u=f.protocol+"//"+document.location.host+'
         /* istanbul ignore else */
-        if (res.text && res.text.indexOf('function') > -1) {
+        if (res.text && res.text.includes(rource)) {
           // step 3
-          event.sender.send('electron-baidu-tongji-reply', res.text)
+          const isDevelopment = process.env.NODE_ENV !== 'production'
+          if (isDevelopment) {
+            event.sender.send('electron-baidu-tongji-reply', res.text)
+            return
+          }
+
+          // 百度统计可能改规则了，不统计 file:// 开始的请求
+          // 这里强制替换为 https
+          const target = '(h.c.b.su=h.c.b.u||"https://"+c.dm[0]+a[1]),console.log(k,c,h.c,a),h.c.b.u="https://"+c.dm[0]+'
+          const target2 = '"https://"+c.dm[0]+window.location.pathname+window.location.hash'
+          const text = res.text.replace(rource, target).replace(/window.location.href/g, target2)
+          event.sender.send('electron-baidu-tongji-reply', text)
         }
       })
   })
@@ -32,9 +44,9 @@ const ebtMain = ipcMain => {
 
 /**
  * second step
- * @param {*} ipcRenderer 
- * @param {*} siteId 
- * @param {*} router 
+ * @param {*} ipcRenderer
+ * @param {*} siteId
+ * @param {*} router
  */
 const ebtRenderer = (ipcRenderer, siteId, router) => {
   /* istanbul ignore else */
