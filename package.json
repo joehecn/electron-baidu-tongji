@@ -1,6 +1,6 @@
 {
   "name": "electron-baidu-tongji",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "baidu tongji for electron",
   "main": "index.js",
   "repository": "git@github.com:joehecn/electron-baidu-tongji.git",

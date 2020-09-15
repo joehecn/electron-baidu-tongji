@@ -5,7 +5,7 @@ const request = require('superagent')
  * first step
  * @param {*} ipcMain
  */
-const ebtMain = ipcMain => {
+const ebtMain = (ipcMain, isDevelopment) => {
   /* istanbul ignore else */
   if (!(ipcMain && ipcMain.on)) {
     throw new TypeError(`require ipcMain`)
@@ -25,13 +25,10 @@ const ebtMain = ipcMain => {
         /* istanbul ignore else */
         if (res.text && res.text.includes(rource)) {
           // step 3
-          const isDevelopment = process.env.NODE_ENV !== 'production'
           let text = res.text
+
+          /* istanbul ignore else */
           if (!isDevelopment) {
-            // event.sender.send('electron-baidu-tongji-reply', {
-            //   text: res.text
-            // })
-            // return
             // 百度统计可能改规则了，不统计 file:// 开始的请求
             // 这里强制替换为 https
             const target = '(h.c.b.su=h.c.b.u||"https://"+c.dm[0]+a[1]),h.c.b.u="https://"+c.dm[0]+'

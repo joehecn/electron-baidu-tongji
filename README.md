@@ -28,19 +28,21 @@ $ npm install electron-baidu-tongji -S
 
 ## API
 
-### ebtMain(ipcMain)
+### ebtMain(ipcMain, [isDevelopment])
 主进程
 - ipcMain: 必要参数
+- isDevelopment: 可选参数, 如果有则在开发时会发送 http://localhost...
 
 ``` javascript
 // main/index.js
 import { ipcMain } from 'electron'
 import { ebtMain } from 'electron-baidu-tongji'
 
-ebtMain(ipcMain)
+const isDevelopment = process.env.NODE_ENV !== 'production'
+ebtMain(ipcMain, isDevelopment)
 ```
 
-### ebtRenderer(ipcRenderer, siteId, router)
+### ebtRenderer(ipcRenderer, siteId, [router])
 渲染进程
 - ipcRenderer: 必要参数
 - siteId:      必要参数, 百度帐号的站点id
