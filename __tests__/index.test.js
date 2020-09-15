@@ -32,7 +32,10 @@ const ipcMain = {
 
 const ipcRenderer = {
   on (_, callback) {
-    const arg = '(function () { window._hmt.push([]) })()/*(h.c.b.su=h.c.b.u||document.location.href),h.c.b.u=f.protocol+"//"+document.location.host+*/'
+    const arg = {
+      text: '(function () { window._hmt.push([]) })()/*(h.c.b.su=h.c.b.u||document.location.href),h.c.b.u=f.protocol+"//"+document.location.host+*/',
+      isDevelopment: true
+    }
     callback(_, arg)
   },
   send () {}

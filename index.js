@@ -26,17 +26,20 @@ const ebtMain = ipcMain => {
         if (res.text && res.text.includes(rource)) {
           // step 3
           const isDevelopment = process.env.NODE_ENV !== 'production'
-          if (isDevelopment) {
-            event.sender.send('electron-baidu-tongji-reply', res.text)
-            return
+          let text = res.text
+          if (!isDevelopment) {
+            // event.sender.send('electron-baidu-tongji-reply', {
+            //   text: res.text
+            // })
+            // return
+            // 百度统计可能改规则了，不统计 file:// 开始的请求
+            // 这里强制替换为 https
+            const target = '(h.c.b.su=h.c.b.u||"https://"+c.dm[0]+a[1]),h.c.b.u="https://"+c.dm[0]+'
+            const target2 = '"https://"+c.dm[0]+window.location.pathname+window.location.hash'
+            text = res.text.replace(rource, target).replace(/window.location.href/g, target2)
           }
 
-          // 百度统计可能改规则了，不统计 file:// 开始的请求
-          // 这里强制替换为 https
-          const target = '(h.c.b.su=h.c.b.u||"https://"+c.dm[0]+a[1]),console.log(k,c,h.c,a),h.c.b.u="https://"+c.dm[0]+'
-          const target2 = '"https://"+c.dm[0]+window.location.pathname+window.location.hash'
-          const text = res.text.replace(rource, target).replace(/window.location.href/g, target2)
-          event.sender.send('electron-baidu-tongji-reply', text)
+          event.sender.send('electron-baidu-tongji-reply', { text, isDevelopment })
         }
       })
   })
@@ -60,11 +63,14 @@ const ebtRenderer = (ipcRenderer, siteId, router) => {
   }
 
   // step 4
-  ipcRenderer.on('electron-baidu-tongji-reply', (_, arg) => {
+  ipcRenderer.on('electron-baidu-tongji-reply', (_, { text, isDevelopment }) => {
+    /* istanbul ignore else */
+    if (isDevelopment) { document.body.classList.add('electron-baidu-tongji_dev') }
+
     window._hmt = window._hmt || []
 
     let hm = document.createElement('script')
-    hm.text = arg
+    hm.text = text
 
     let head = document.getElementsByTagName('head')[0]
     head.appendChild(hm)
